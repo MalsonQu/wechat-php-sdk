@@ -31,6 +31,7 @@ class Base
     function __construct ()
     {
 
+
         $this->_initialize();
     }
 
