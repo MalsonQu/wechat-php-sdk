@@ -38,9 +38,9 @@ class Service extends Base
     static public function verify ()
     {
         $_verifySignatureArr = [
+            self::$config['token'] ,
             $_GET['timestamp'] ,
             $_GET['nonce'] ,
-            $_GET['echostr'] ,
         ];
 
         return Verify::signature( $_verifySignatureArr , $_GET['signature'] ) ? $_GET['echostr'] : FALSE;
