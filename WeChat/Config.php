@@ -3,23 +3,20 @@
  * Created by PhpStorm.
  * User: Malson
  * Date: 2017/11/16
- * Time: 上午10:08
+ * Time: 下午1:34
  */
 
 namespace WeChat;
 
 
-class Base
+use WeChat\Exception\ConfigException;
+
+class Config extends Base
 {
 
     // +----------------------------------------------------------------------
     // | 定义
     // +----------------------------------------------------------------------
-
-    // Tokken 验证
-    static protected $config = [
-        'token' => '',
-    ];
 
     // +----------------------------------------------------------------------
     // | 绑定
@@ -33,14 +30,21 @@ class Base
     // | 方法
     // +----------------------------------------------------------------------
 
-    function __construct ()
+    static function setConfig ( $config )
     {
-        $this->_initialize();
-    }
+        if ( !is_array( $config ) )
+        {
+            throw new ConfigException( '配置文件只能是数组' );
+        }
 
-    protected function _initialize ()
-    {
-
+        foreach ( $config as $key => $value )
+        {
+            if ( !isset( self::$config[ $key ] ) )
+            {
+                throw new ConfigException( '不存在 名称为<' . $key . '>的配置项' );
+            }
+            self::$config[ $key ] = $value;
+        }
     }
 
 }
