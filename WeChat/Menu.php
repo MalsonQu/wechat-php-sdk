@@ -3,30 +3,23 @@
  * Created by PhpStorm.
  * User: Malson
  * Date: 2017/11/16
- * Time: 上午10:08
+ * Time: 下午1:59
  */
 
 namespace WeChat;
 
-
-class Base
+/**
+ * 自定义菜单
+ *
+ * Class Menu
+ * @package WeChat
+ */
+class Menu
 {
 
     // +----------------------------------------------------------------------
     // | 定义
     // +----------------------------------------------------------------------
-
-    // Tokken 验证
-    static protected $config = [
-        'AppID'     => '' ,
-        'AppSecret' => '' ,
-        'token'     => '' ,
-    ];
-
-    static protected $LINKS = [
-        'ACCESS_TOKEN_GET' => 'https://api.weixin.qq.com/cgi-bin/token?' ,      // 获取access_token
-        'MENU_CREATE'      => 'https://api.weixin.qq.com/cgi-bin/menu/create?', // 菜单创建
-    ];
 
     // +----------------------------------------------------------------------
     // | 绑定
@@ -40,14 +33,6 @@ class Base
     // | 方法
     // +----------------------------------------------------------------------
 
-    function __construct ()
-    {
-        $this->_initialize();
-    }
 
-    protected function _initialize ()
-    {
-
-    }
 
 }
