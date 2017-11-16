@@ -1,0 +1,19 @@
+{
+  "name": "malson/wechat-php-sdk",
+  "description": "基于PHP的微信SDK",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "Malson",
+      "email": "quqingyu@live.cn"
+    }
+  ],
+  "require": {
+    "php": ">=5.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Wechat\\": "./WeChat"
+    }
+  }
+}
