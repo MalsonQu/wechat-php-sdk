@@ -9,6 +9,8 @@
 namespace WeChat\Tools;
 
 
+use WeChat\Exception\FileException;
+
 class Cache
 {
 
@@ -66,7 +68,10 @@ class Cache
 
         if ( !is_dir( $_cacheDirPath ) )
         {
-            mkdir( $_cacheDirPath );
+            if (!mkdir( $_cacheDirPath ))
+            {
+                throw new FileException('权限不足');
+            }
         }
 
         return $_cacheDirPath;
