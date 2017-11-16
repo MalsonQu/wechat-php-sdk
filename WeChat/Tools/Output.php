@@ -3,13 +3,13 @@
  * Created by PhpStorm.
  * User: Malson
  * Date: 2017/11/16
- * Time: 上午10:08
+ * Time: 上午10:57
  */
 
-namespace WeChat;
+namespace WeChat\Tools;
 
 
-class Base
+class Output
 {
 
     // +----------------------------------------------------------------------
@@ -28,13 +28,28 @@ class Base
     // | 方法
     // +----------------------------------------------------------------------
 
-    function __construct ()
+    static function saveToLocal ( $needSave , $path = '' )
     {
-        $this->_initialize();
-    }
 
-    protected function _initialize()
-    {
+        echo __DIR__;
+
+//        $_str = '';
+//        if ( is_array( $needSave ) )
+//        {
+//            $_str = serialize( $needSave );
+//        }
+//        else
+//        {
+//            $_str = $needSave;
+//        }
+//
+//        if ( empty( $path ) )
+//        {
+////            file_put_contents( $filename , $data);
+//        }else
+//        {
+//
+//        }
 
     }
 
