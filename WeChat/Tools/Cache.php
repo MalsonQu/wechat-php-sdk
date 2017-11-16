@@ -30,14 +30,20 @@ class Cache
     // | 方法
     // +----------------------------------------------------------------------
 
-    static function set ( $name , $val )
+    static function set ( $name , $val , $time )
     {
-        if ( is_array( $val ) )
+
+        $_data = [
+            'exp'  => time() + $time ,
+            'data' => $val ,
+        ];
+
+        if ( file_put_contents( self::getTmpFile() . $name , serialize( $_data ) ) === FALSE )
         {
-            $val = serialize( $val );
+            throw new FileException( '无法写入缓存' );
         }
 
-        file_put_contents( self::getTmpFile() . $name , $val );
+        return TRUE;
     }
 
     static function get ( $name )
@@ -47,14 +53,14 @@ class Cache
             return FALSE;
         }
 
-        $_content = file_get_contents( self::getTmpFile() . $name );
+        $_content = unserialize( file_get_contents( self::getTmpFile() . $name ) );
 
-        if ( @$_val = unserialize( $_content ) )
+        if ( time() < $_content['exp'] )
         {
-            return $_val;
+            return $_content['data'];
         }
 
-        return $_content;
+        return FALSE;
     }
 
     static function has ( $name )
@@ -68,9 +74,9 @@ class Cache
 
         if ( !is_dir( $_cacheDirPath ) )
         {
-            if (!mkdir( $_cacheDirPath ))
+            if ( !mkdir( $_cacheDirPath ) )
             {
-                throw new FileException('权限不足');
+                throw new FileException( '缓存目录不存在,并且权限不足以创建它' );
             }
         }
 
