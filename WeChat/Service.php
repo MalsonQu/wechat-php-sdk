@@ -9,6 +9,7 @@
 namespace WeChat;
 
 
+use WeChat\Exception\ConfigException;
 use WeChat\Tools\Verify;
 
 class Service extends Base
@@ -32,11 +33,22 @@ class Service extends Base
 
     /**
      * 验证微信服务器配置
-     *
      * @return bool
+     * @throws ConfigException
      */
     static public function verify ()
     {
+        foreach ( [
+                      'timestamp' ,
+                      'nonce',
+                  ] as $item )
+        {
+            if ( !isset( $_GET[ $item ] ) )
+            {
+                throw new ConfigException( '未定义' . $item );
+            }
+        }
+
         $_verifySignatureArr = [
             self::$config['token'] ,
             $_GET['timestamp'] ,
