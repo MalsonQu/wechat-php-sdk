@@ -46,6 +46,7 @@ class Menu extends Base
      *
      * @return bool
      * @throws ParamException
+     * @throws WeResultException
      */
     static function create ( $data )
     {
