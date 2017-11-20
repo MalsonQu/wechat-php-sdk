@@ -2,6 +2,7 @@ composer.phar
 /vendor/
 .idea
 index.php
+test.php
 cache
 composer.lock
 Test
