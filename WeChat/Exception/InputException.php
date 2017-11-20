@@ -9,4 +9,10 @@
 namespace WeChat\Exception;
 
 
-class InputException extends \Exception {}
+class InputException extends \Exception
+{
+    public function __toString ()
+    {
+        return $this->message;
+    }
+}

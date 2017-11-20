@@ -2,14 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: Malson
- * Date: 2017/11/16
- * Time: 下午2:41
+ * Date: 2017/11/17
+ * Time: 上午9:02
  */
 
 namespace WeChat\Exception;
 
 
-class FileException extends \Exception
+class ParamException extends \Exception
 {
     public function __toString ()
     {

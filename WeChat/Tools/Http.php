@@ -11,7 +11,7 @@ namespace WeChat\Tools;
 
 class Http
 {
-    
+
     // +----------------------------------------------------------------------
     // | 方法
     // +----------------------------------------------------------------------
@@ -46,7 +46,7 @@ class Http
      * 使用证书，以post方式提交xml到对应的接口url
      *
      * @param string $url     POST提交的内容
-     * @param array  $data    请求的地址
+     * @param array|string  $data    请求的地址
      * @param string $ssl_cer 证书Cer路径 | 证书内容
      * @param string $ssl_key 证书Key路径 | 证书内容
      * @param int    $second  设置请求超时时间
@@ -84,23 +84,32 @@ class Http
     }
 
     /**
-     * 以GET方式提交请求
+     * 以get方式提交请求
      *
-     * @param string $url  请求的地址
-     * @param array  $data 请求内容
+     * @param string $url
+     *
+     * @param array  $data
      *
      * @return bool|mixed
      */
     static public function httpGet ( $url , $data = [] )
     {
         $curl = curl_init();
-        if ( !empty( $var ) )
+
+        if ( stripos( $url , "https://" ) !== 0 )
+        {
+            curl_setopt( $curl , CURLOPT_SSL_VERIFYPEER , FALSE );
+            curl_setopt( $curl , CURLOPT_SSL_VERIFYHOST , FALSE );
+            curl_setopt( $curl , CURLOPT_SSLVERSION , 1 );
+        }
+
+        if ( !empty( $data ) )
         {
             $url .= http_build_query( $data );
         }
+
         curl_setopt( $curl , CURLOPT_URL , $url );
-        curl_setopt( $curl , CURLOPT_HEADER , FALSE );
-        curl_setopt( $curl , CURLOPT_RETURNTRANSFER , TRUE );
+        curl_setopt( $curl , CURLOPT_RETURNTRANSFER , 1 );
         list( $content , $status ) = [
             curl_exec( $curl ) ,
             curl_getinfo( $curl ) ,
@@ -108,7 +117,5 @@ class Http
         ];
 
         return ( intval( $status["http_code"] ) === 200 ) ? $content : FALSE;
-
-
     }
 }

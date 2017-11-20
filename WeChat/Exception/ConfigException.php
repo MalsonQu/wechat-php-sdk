@@ -9,4 +9,10 @@
 namespace WeChat\Exception;
 
 
-class ConfigException extends \Exception{}
+class ConfigException extends \Exception
+{
+    public function __toString ()
+    {
+        return $this->message;
+    }
+}
