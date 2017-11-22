@@ -3,6 +3,7 @@ composer.phar
 .idea
 index.php
 test.php
+test2.php
 cache
 composer.lock
 Test

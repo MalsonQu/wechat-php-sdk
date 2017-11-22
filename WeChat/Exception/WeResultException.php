@@ -68,6 +68,7 @@ class WeResultException extends \Exception
         40137   => '不支持的图片格式' ,
         40155   => '请勿添加其他公众号的主页链接' ,
         40163   => 'code已被使用' ,
+        40164   => '请求地址不在IP白名单内' ,
         41001   => '缺少access_token参数' ,
         41002   => '缺少appid参数' ,
         41003   => '缺少refresh_token参数' ,

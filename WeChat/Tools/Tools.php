@@ -78,7 +78,48 @@ class Tools
         return preg_replace_callback( '/\\\\u([0-9a-f]{4})/i' , create_function( '$matches' , 'return mb_convert_encoding(pack("H*", $matches[1]), "UTF-8", "UCS-2BE");' ) , json_encode( $array ) );
     }
 
+    /**
+     * 数组转xml
+     *
+     * @param $array
+     *
+     * @return string
+     */
+    static public function arr2xml ( $array )
+    {
+        $_xml = '<xml>' . self::arr2str( $array ) . '</xml>';
 
+        return $_xml;
+    }
+
+    static private function arr2str ( $arr )
+    {
+        $_xml = '';
+        foreach ( $arr as $key => $value )
+        {
+            if ( $key === 'CreateTime' || $key === 'TimeStamp' )
+            {
+                $_xml .= "<{$key}>{$value}</{$key}>";
+            }
+            else
+            {
+                $_key = is_int( $key ) ? 'item' : $key;
+
+                $_xml .= "<{$_key}>";
+                if ( is_array( $value ) )
+                {
+                    $_xml .= self::arr2str( $value );
+                }
+                else
+                {
+                    $_xml .= "<![CDATA[{$value}]]>";
+                }
+                $_xml .= "</{$_key}>";
+            }
+        }
+
+        return $_xml;
+    }
 
 
 }

@@ -18,9 +18,12 @@ class Base
 
     // Tokken 验证
     static protected $config = [
-        'AppID'     => '' ,
-        'AppSecret' => '' ,
-        'token'     => '' ,
+        'AppID'          => '' ,
+        'AppSecret'      => '' ,
+        'token'          => '' ,
+        'EncodingAesKey' => '' ,
+        'Encrypt'        => FALSE ,
+        'WeChatID'        => '' ,
     ];
 
     static protected $LINKS = [
@@ -29,7 +32,7 @@ class Base
         // 授权登录的 access_token
         'OAUTH_ACCESS_TOKEN_GET'   => 'https://api.weixin.qq.com/sns/oauth2/access_token?' ,
         // 重新获取用户的access_token
-        'OAUTH_REFRESH_TOKEN'  => 'https://api.weixin.qq.com/sns/oauth2/refresh_token?' ,
+        'OAUTH_REFRESH_TOKEN'      => 'https://api.weixin.qq.com/sns/oauth2/refresh_token?' ,
         //拉取用户信息
         'USER_INFO'                => 'https://api.weixin.qq.com/sns/userinfo?' ,
         // 检验授权凭证（access_token）是否有效
@@ -48,6 +51,8 @@ class Base
         'DIY_MENU_TEST'            => 'https://api.weixin.qq.com/cgi-bin/menu/trymatch?' ,
         // 授权跳转
         'OAUTH'                    => 'https://open.weixin.qq.com/connect/oauth2/authorize?' ,
+        // 获取素材列表
+        'BATCH_GET_MATERIAL'       => 'https://api.weixin.qq.com/cgi-bin/material/batchget_material?' ,
     ];
 
     // +----------------------------------------------------------------------
