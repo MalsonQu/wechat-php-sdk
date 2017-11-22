@@ -132,10 +132,25 @@ class Custom extends Base
      *                        name  =>  文件名称
      *
      * @return bool
+     * @throws ParamException
      * @throws WeResultException
      */
     public function uploadHeadImg ( $account , $media )
     {
+        if(!isset( $media['path']))
+        {
+            throw new ParamException('参数<path>必须填写');
+        }
+        if(!isset( $media['type']))
+        {
+            throw new ParamException('参数<type>必须填写');
+        }
+        if(!isset( $media['name']))
+        {
+            throw new ParamException('参数<name>必须填写');
+        }
+
+
         $_data = [
             'media' => new \CURLFile( realpath( $media['path'] ) , $media['type'] , $media['name'] ) ,
         ];
