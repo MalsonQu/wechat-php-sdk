@@ -4,6 +4,7 @@ composer.phar
 index.php
 test.php
 test2.php
+kf.php
 cache
 composer.lock
 Test
