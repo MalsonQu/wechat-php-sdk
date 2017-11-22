@@ -56,7 +56,7 @@ class Menu extends Base
         }
         $_url = self::$LINKS['MENU_CREATE'] . 'access_token=' . AccessToken::get();
 
-        $_result = Tools::json2arr( Http::httpsPost( $_url , Tools::arr2json( $data ) ) );
+        $_result = Tools::json2arr( Http::httpPost( $_url , Tools::arr2json( $data ) ) );
 
         if ( isset( $_result['errcode'] ) && $_result['errcode'] !== 0 )
         {
@@ -121,7 +121,7 @@ class Menu extends Base
         }
         $_url = self::$LINKS['DIY_MENU_CREATE'] . 'access_token=' . AccessToken::get();
 
-        $_result = Tools::json2arr( Http::httpsPost( $_url , Tools::arr2json( $data ) ) );
+        $_result = Tools::json2arr( Http::httpPost( $_url , Tools::arr2json( $data ) ) );
 
         if ( isset( $_result['errcode'] ) && $_result['errcode'] !== 0 )
         {
@@ -148,7 +148,7 @@ class Menu extends Base
         }
         $_url = self::$LINKS['DIY_MENU_DELETE'] . 'access_token=' . AccessToken::get();
 
-        $_result = Tools::json2arr( Http::httpsPost( $_url , Tools::arr2json( [ 'menuid' => $menuId ] ) ) );
+        $_result = Tools::json2arr( Http::httpPost( $_url , Tools::arr2json( [ 'menuid' => $menuId ] ) ) );
 
         if ( isset( $_result['errcode'] ) && $_result['errcode'] !== 0 )
         {
@@ -176,7 +176,7 @@ class Menu extends Base
 
         $_url = self::$LINKS['DIY_MENU_TEST'] . 'access_token=' . AccessToken::get();
 
-        $_result = Tools::json2arr( Http::httpsPost( $_url , Tools::arr2json( [ 'user_id' => $user_id ] ) ) );
+        $_result = Tools::json2arr( Http::httpPost( $_url , Tools::arr2json( [ 'user_id' => $user_id ] ) ) );
 
         //        var_dump( $_result );
 

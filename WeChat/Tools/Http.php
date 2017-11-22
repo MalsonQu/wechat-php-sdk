@@ -45,11 +45,11 @@ class Http
     /**
      * 使用证书，以post方式提交xml到对应的接口url
      *
-     * @param string $url     POST提交的内容
-     * @param array|string  $data    请求的地址
-     * @param string $ssl_cer 证书Cer路径 | 证书内容
-     * @param string $ssl_key 证书Key路径 | 证书内容
-     * @param int    $second  设置请求超时时间
+     * @param string       $url     POST提交的内容
+     * @param array|string $data    请求的地址
+     * @param string       $ssl_cer 证书Cer路径 | 证书内容
+     * @param string       $ssl_key 证书Key路径 | 证书内容
+     * @param int          $second  设置请求超时时间
      *
      * @return bool|mixed
      */

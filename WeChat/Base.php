@@ -23,7 +23,7 @@ class Base
         'token'          => '' ,
         'EncodingAesKey' => '' ,
         'Encrypt'        => FALSE ,
-        'WeChatID'        => '' ,
+        'WeChatID'       => '' ,
     ];
 
     static protected $LINKS = [
@@ -53,6 +53,36 @@ class Base
         'OAUTH'                    => 'https://open.weixin.qq.com/connect/oauth2/authorize?' ,
         // 获取素材列表
         'BATCH_GET_MATERIAL'       => 'https://api.weixin.qq.com/cgi-bin/material/batchget_material?' ,
+        // 添加客服
+        'KF_ACCOUNT_CREATE'        => 'https://api.weixin.qq.com/customservice/kfaccount/add?' ,
+        // 编辑客服
+        'KF_ACCOUNT_UPDATE'        => 'https://api.weixin.qq.com/customservice/kfaccount/update?' ,
+        // 删除客服
+        'KF_ACCOUNT_DELETE'        => 'https://api.weixin.qq.com/customservice/kfaccount/del?' ,
+        // 上传头像
+        'KF_ACCOUNT_HEAD_IMG'      => 'https://api.weixin.qq.com/customservice/kfaccount/uploadheadimg?' ,
+        // 获取列表
+        'KF_ACCOUNT_LIST'          => 'https://api.weixin.qq.com/cgi-bin/customservice/getkflist?' ,
+        // 获取在线客服列表
+        'KF_ACCOUNT_ONLINE_LIST'   => 'https://api.weixin.qq.com/cgi-bin/customservice/getonlinekflist?' ,
+        // 邀请绑定
+        'KF_ACCOUNT_INVITE_WORKER' => 'https://api.weixin.qq.com/customservice/kfaccount/inviteworker?' ,
+        // 发送消息
+        'KF_ACCOUNT_SEND'          => 'https://api.weixin.qq.com/cgi-bin/message/custom/send?' ,
+        // 类型
+        'KF_ACCOUNT_TYPING'        => 'https://api.weixin.qq.com/cgi-bin/message/custom/typing?' ,
+        // 创建客服会话
+        'KF_SESSION_CREATE'        => 'https://api.weixin.qq.com/customservice/kfsession/create?' ,
+        // 关闭会话
+        'KF_SESSION_CLOSE'         => 'https://api.weixin.qq.com/customservice/kfsession/close?' ,
+        // 获取客户会话状态
+        'KF_SESSION_GET'           => 'https://api.weixin.qq.com/customservice/kfsession/getsession?' ,
+        // 获取客服会话列表
+        'KF_SESSION_LIST'          => 'https://api.weixin.qq.com/customservice/kfsession/getsessionlist?' ,
+        // 获取未接入会话列表
+        'KF_SESSION_WAIT_LIST'     => 'https://api.weixin.qq.com/customservice/kfsession/getwaitcase?' ,
+        // 获取聊天记录
+        'KF_MSG_LIST'              => 'https://api.weixin.qq.com/customservice/msgrecord/getmsglist?' ,
     ];
 
     // +----------------------------------------------------------------------

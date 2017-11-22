@@ -47,6 +47,8 @@ class Message extends Base
         'music' ,
         // 图文消息
         'news' ,
+        // 客服转接
+        'transfer_customer_service' ,
     ];
 
     /**
@@ -725,6 +727,25 @@ class Message extends Base
             $i++;
         }
         $this->toBeSendMessage['Articles'] = $data;
+    }
+
+    /**
+     * 将消息转发给客服
+     *
+     * @param array $data
+     */
+    public function _transfer_customer_service ( $data = [] )
+    {
+        $this->toBeSendMessage = [
+            'CreateTime' => $this->time ,
+            'MsgType'    => 'transfer_customer_service' ,
+        ];
+
+        if ( !empty( $data ) )
+        {
+            $this->toBeSendMessage['TransInfo']['KfAccount'] = $data . '@' . self::$config['WeChatID'];
+        }
+
     }
 
 }
