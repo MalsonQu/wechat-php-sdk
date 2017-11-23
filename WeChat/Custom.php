@@ -11,7 +11,7 @@ namespace WeChat;
 
 use WeChat\Exception\ParamException;
 use WeChat\Exception\WeResultException;
-use WeChat\Tools\AccessToken;
+use WeChat\Tools\Token;
 use WeChat\Tools\Http;
 use WeChat\Tools\Tools;
 
@@ -82,7 +82,7 @@ class Custom extends Base
             'nickname'   => $nickname ,
         ];
 
-        $_url    = self::$LINKS['KF_ACCOUNT_CREATE'] . 'access_token=' . AccessToken::get();
+        $_url    = self::$LINKS['KF_ACCOUNT_CREATE'] . 'access_token=' . Token::getAccessToken();
         $_result = Tools::json2arr( Http::httpPost( $_url , Tools::arr2json( $_data ) ) );
 
         if ( isset( $_result['errcode'] ) && $_result['errcode'] !== 0 )
@@ -110,7 +110,7 @@ class Custom extends Base
             'nickname'   => $nickname ,
         ];
 
-        $_url = self::$LINKS['KF_ACCOUNT_UPDATE'] . 'access_token=' . AccessToken::get();
+        $_url = self::$LINKS['KF_ACCOUNT_UPDATE'] . 'access_token=' . Token::getAccessToken();
 
         $_result = Tools::json2arr( Http::httpPost( $_url , Tools::arr2json( $_data ) ) );
 
@@ -137,17 +137,17 @@ class Custom extends Base
      */
     public function uploadHeadImg ( $account , $media )
     {
-        if(!isset( $media['path']))
+        if ( empty( $media['path'] ) )
         {
-            throw new ParamException('参数<path>必须填写');
+            throw new ParamException( '参数<path>必须填写' );
         }
-        if(!isset( $media['type']))
+        if ( empty( $media['type'] ) )
         {
-            throw new ParamException('参数<type>必须填写');
+            throw new ParamException( '参数<type>必须填写' );
         }
-        if(!isset( $media['name']))
+        if ( empty( $media['name'] ) )
         {
-            throw new ParamException('参数<name>必须填写');
+            throw new ParamException( '参数<name>必须填写' );
         }
 
 
@@ -155,7 +155,7 @@ class Custom extends Base
             'media' => new \CURLFile( realpath( $media['path'] ) , $media['type'] , $media['name'] ) ,
         ];
 
-        $_url = self::$LINKS['KF_ACCOUNT_HEAD_IMG'] . 'access_token=' . AccessToken::get() . '&kf_account=' . $account . '@' . self::$config['WeChatID'];
+        $_url = self::$LINKS['KF_ACCOUNT_HEAD_IMG'] . 'access_token=' . Token::getAccessToken() . '&kf_account=' . $account . '@' . self::$config['WeChatID'];
 
         $_result = Tools::json2arr( Http::httpPost( $_url , $_data ) );
 
@@ -178,7 +178,7 @@ class Custom extends Base
     public function delete ( $account )
     {
         $_data = [
-            'access_token' => AccessToken::get() ,
+            'access_token' => Token::getAccessToken() ,
             'kf_account'   => $account . '@' . self::$config['WeChatID'] ,
         ];
 
@@ -203,7 +203,7 @@ class Custom extends Base
     public function getList ()
     {
         $_data = [
-            'access_token' => AccessToken::get() ,
+            'access_token' => Token::getAccessToken() ,
         ];
 
         $_url = self::$LINKS['KF_ACCOUNT_LIST'];
@@ -227,7 +227,7 @@ class Custom extends Base
     public function getOnlineList ()
     {
         $_data = [
-            'access_token' => AccessToken::get() ,
+            'access_token' => Token::getAccessToken() ,
         ];
         $_url  = self::$LINKS['KF_ACCOUNT_ONLINE_LIST'];
 
@@ -256,7 +256,7 @@ class Custom extends Base
             'kf_account' => $account . '@' . self::$config['WeChatID'] ,
             'invite_wx'  => $inviteWx ,
         ];
-        $_url  = self::$LINKS['KF_ACCOUNT_INVITE_WORKER'] . 'access_token=' . AccessToken::get();
+        $_url  = self::$LINKS['KF_ACCOUNT_INVITE_WORKER'] . 'access_token=' . Token::getAccessToken();
 
         $_result = Tools::json2arr( Http::httpPost( $_url , Tools::arr2json( $_data ) ) );
 
@@ -284,7 +284,7 @@ class Custom extends Base
             'command' => $typing ? 'Typing' : 'CancelTyping' ,
         ];
 
-        $_url = self::$LINKS['KF_ACCOUNT_TYPING'] . 'access_token=' . AccessToken::get();
+        $_url = self::$LINKS['KF_ACCOUNT_TYPING'] . 'access_token=' . Token::getAccessToken();
 
         $_result = Tools::json2arr( Http::httpPost( $_url , Tools::arr2json( $_data ) ) );
 
@@ -324,7 +324,7 @@ class Custom extends Base
             'openid'     => $openid ,
         ];
 
-        $_url = self::$LINKS['KF_SESSION_CREATE'] . 'access_token=' . AccessToken::get();
+        $_url = self::$LINKS['KF_SESSION_CREATE'] . 'access_token=' . Token::getAccessToken();
 
         $_result = Tools::json2arr( Http::httpPost( $_url , Tools::arr2json( $_data ) ) );
 
@@ -363,7 +363,7 @@ class Custom extends Base
             'openid'     => $openid ,
         ];
 
-        $_url = self::$LINKS['KF_SESSION_CLOSE'] . 'access_token=' . AccessToken::get();
+        $_url = self::$LINKS['KF_SESSION_CLOSE'] . 'access_token=' . Token::getAccessToken();
 
         $_result = Tools::json2arr( Http::httpPost( $_url , Tools::arr2json( $_data ) ) );
 
@@ -392,7 +392,7 @@ class Custom extends Base
         }
 
         $_data = [
-            'access_token' => AccessToken::get() ,
+            'access_token' => Token::getAccessToken() ,
             'openid'       => $openid ,
         ];
 
@@ -427,7 +427,7 @@ class Custom extends Base
 
         $_data = [
             'kf_account'   => $account . '@' . self::$config['WeChatID'] ,
-            'access_token' => AccessToken::get() ,
+            'access_token' => Token::getAccessToken() ,
         ];
 
         $_url = self::$LINKS['KF_SESSION_LIST'];
@@ -453,7 +453,7 @@ class Custom extends Base
     public function sessionWaitList ()
     {
         $_data = [
-            'access_token' => AccessToken::get() ,
+            'access_token' => Token::getAccessToken() ,
         ];
 
         $_url = self::$LINKS['KF_SESSION_WAIT_LIST'];
@@ -494,7 +494,7 @@ class Custom extends Base
 
         if ( ( $endTime - 24 * 60 * 60 ) > $startTime )
         {
-            throw new ParamException('查询时段不能超过24小时');
+            throw new ParamException( '查询时段不能超过24小时' );
         }
 
         $_data = [
@@ -504,7 +504,7 @@ class Custom extends Base
             'number'    => $number ,
         ];
 
-        $_url = self::$LINKS['KF_MSG_LIST'] . 'access_token=' . AccessToken::get();
+        $_url = self::$LINKS['KF_MSG_LIST'] . 'access_token=' . Token::getAccessToken();
 
         $_result = Tools::json2arr( Http::httpPost( $_url , Tools::arr2json( $_data ) ) );
 
@@ -564,7 +564,7 @@ class Custom extends Base
     public function sendMessage ()
     {
 
-        $_url = self::$LINKS['KF_ACCOUNT_SEND'] . 'access_token=' . AccessToken::get();
+        $_url = self::$LINKS['KF_ACCOUNT_SEND'] . 'access_token=' . Token::getAccessToken();
 
         $_result = Tools::json2arr( Http::httpPost( $_url , Tools::arr2json( $this->toBeSendMessage ) ) );
 

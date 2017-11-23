@@ -29,6 +29,8 @@ class Base
     static protected $LINKS = [
         // 获取access_token
         'ACCESS_TOKEN_GET'         => 'https://api.weixin.qq.com/cgi-bin/token?' ,
+        // 获取jsapi_ticket
+        'JS_API_TICKET_GET'        => 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?' ,
         // 授权登录的 access_token
         'OAUTH_ACCESS_TOKEN_GET'   => 'https://api.weixin.qq.com/sns/oauth2/access_token?' ,
         // 重新获取用户的access_token
@@ -83,6 +85,10 @@ class Base
         'KF_SESSION_WAIT_LIST'     => 'https://api.weixin.qq.com/customservice/kfsession/getwaitcase?' ,
         // 获取聊天记录
         'KF_MSG_LIST'              => 'https://api.weixin.qq.com/customservice/msgrecord/getmsglist?' ,
+        // 新建门店
+        'POI_ADD'                  => 'http://api.weixin.qq.com/cgi-bin/poi/addpoi?' ,
+        // 卡券图片上传接口
+        'CARD_IMG_UPLOAD'          => 'https://api.weixin.qq.com/cgi-bin/media/uploadimg?' ,
     ];
 
     // +----------------------------------------------------------------------

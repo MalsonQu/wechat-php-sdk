@@ -7,6 +7,8 @@
  */
 
 namespace WeChat\Lib;
+use WeChat\Tools\Tools;
+
 /**
  * 接收和推送给公众平台消息的加解密
  * @category   WechatSDK
@@ -32,9 +34,8 @@ class Prpcrypt
      */
     public function encrypt ( $text , $appid )
     {
-        $encrypted = FALSE;
         //获得16位随机字符串，填充到明文之前
-        $random      = $this->getRandomStr();//"aaaabbbbccccdddd";
+        $random      = Tools::getRandomStr();
         $text        = $random . pack( "N" , strlen( $text ) ) . $text . $appid;
         $iv          = substr( $this->key , 0 , 16 );
         $pkc_encoder = new PKCS7Encoder;
@@ -70,22 +71,4 @@ class Prpcrypt
 
         return $xml_content;
     }
-
-    /**
-     * 随机生成16位字符串
-     * @return string 生成的字符串
-     */
-    public function getRandomStr ()
-    {
-        $str     = "";
-        $str_pol = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
-        $max     = strlen( $str_pol ) - 1;
-        for ( $i = 0; $i < 16; $i++ )
-        {
-            $str .= $str_pol[ mt_rand( 0 , $max ) ];
-        }
-
-        return $str;
-    }
-
 }

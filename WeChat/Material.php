@@ -11,7 +11,7 @@ namespace WeChat;
 
 use WeChat\Exception\ParamException;
 use WeChat\Exception\WeResultException;
-use WeChat\Tools\AccessToken;
+use WeChat\Tools\Token;
 use WeChat\Tools\Http;
 use WeChat\Tools\Tools;
 
@@ -69,7 +69,7 @@ class Material extends Base
             throw new ParamException( '参数<type>只能为大于1的数字' );
         }
 
-        $_url   = self::$LINKS['BATCH_GET_MATERIAL'] . 'access_token=' . AccessToken::get();
+        $_url   = self::$LINKS['BATCH_GET_MATERIAL'] . 'access_token=' . Token::getAccessToken();
         $_param = [
             'type'   => $type ,
             'offset' => ( $page - 1 ) * $this->listRow ,

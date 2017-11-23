@@ -157,7 +157,7 @@ class Message extends Base
 
         $encrypt_msg = $pc->encrypt( $text , self::$config['AppID'] );
 
-        $nonce = $pc->getRandomStr();
+        $nonce = Tools::getRandomStr();
 
         $sha1 = new SHA1();
 
