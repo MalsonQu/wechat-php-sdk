@@ -9,9 +9,10 @@
 namespace WeChat\Tools;
 
 
+use WeChat\Base;
 use WeChat\Exception\FileException;
 
-class Cache
+class Cache extends Base
 {
 
     // +----------------------------------------------------------------------
@@ -33,8 +34,10 @@ class Cache
     static function set ( $name , $val , $time )
     {
 
-        $_data = [
-            'exp'  => time() + $time ,
+        $_data = self::get( $name , TRUE );
+
+        $_data[ self::$config['AppID'] ] = [
+            'exp'  => time() + (int) $time ,
             'data' => $val ,
         ];
 
@@ -46,7 +49,7 @@ class Cache
         return TRUE;
     }
 
-    static function get ( $name )
+    static function get ( $name , $all = FALSE )
     {
         if ( !self::has( $name ) )
         {
@@ -54,6 +57,18 @@ class Cache
         }
 
         $_content = unserialize( file_get_contents( self::getTmpFile() . $name ) );
+
+        if ( $all )
+        {
+            return $_content;
+        }
+
+        if ( !isset( $_content[ self::$config['AppID'] ] ) )
+        {
+            return FALSE;
+        }
+
+        $_content = $_content[ self::$config['AppID'] ];
 
         if ( time() < $_content['exp'] )
         {
@@ -63,7 +78,7 @@ class Cache
         return FALSE;
     }
 
-    static function has ( $name )
+    static private function has ( $name )
     {
         return file_exists( self::getTmpFile() . $name );
     }

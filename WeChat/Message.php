@@ -87,92 +87,6 @@ class Message extends Base
     // | 获取器
     // +----------------------------------------------------------------------
 
-    // +----------------------------------------------------------------------
-    // | 方法
-    // +----------------------------------------------------------------------
-
-    public function _initialize ()
-    {
-        $this->message = $this->postXml();
-
-        if ( isset( $this->message['Encrypt'] ) )
-        {
-            $this->message = $this->decryptMsg();
-        }
-
-        $this->messageType = $this->message['MsgType'];
-
-        $this->time = time();
-    }
-
-    /**
-     * 获取 服务器发过来的xml
-     *
-     * @return array
-     * @throws InputException
-     */
-    private function postXml ()
-    {
-        $_input = file_get_contents( 'php://input' );
-
-        if ( !$_message = Tools::xml2arr( $_input ) )
-        {
-            throw new InputException( '输入的数据格式错误' );
-        }
-
-        return $_message;
-    }
-
-    /**
-     * 解密信息
-     *
-     * @return array 解密后的数组
-     * @throws ParamException
-     */
-    private function decryptMsg ()
-    {
-        if ( strlen( self::$config['EncodingAesKey'] ) !== 43 )
-        {
-            throw new ParamException( '参数<EncodingAesKey>长度错误' );
-        }
-
-        $pc = new Prpcrypt( self::$config['EncodingAesKey'] );
-
-        $_result = $pc->decrypt( $this->message['Encrypt'] , self::$config['AppID'] );
-
-        return Tools::xml2arr( $_result );
-    }
-
-    /**
-     * 加密信息
-     *
-     * @param $text
-     *
-     * @return string
-     */
-
-    private function encryptMsg ( $text )
-    {
-        $pc = new Prpcrypt( self::$config['EncodingAesKey'] );
-
-        $encrypt_msg = $pc->encrypt( $text , self::$config['AppID'] );
-
-        $nonce = Tools::getRandomStr();
-
-        $sha1 = new SHA1();
-
-        $signature = $sha1->getSHA1( self::$config['token'] , $this->time , $nonce , $encrypt_msg );
-
-        $array = [
-            'Encrypt'      => $encrypt_msg ,
-            'MsgSignature' => $signature ,
-            'TimeStamp'    => $this->time ,
-            'Nonce'        => $nonce ,
-        ];
-
-        return Tools::arr2xml( $array );
-    }
-
     /**
      * 获取message内容
      *
@@ -492,6 +406,24 @@ class Message extends Base
         return $this->message['Url'];
     }
 
+    // +----------------------------------------------------------------------
+    // | 方法
+    // +----------------------------------------------------------------------
+
+    public function _initialize ()
+    {
+        $this->message = $this->postXml();
+
+        if ( isset( $this->message['Encrypt'] ) )
+        {
+            $this->message = $this->decryptMsg();
+        }
+
+        $this->messageType = $this->message['MsgType'];
+
+        $this->time = time();
+    }
+
     /**
      * 发送消息
      *
@@ -499,6 +431,74 @@ class Message extends Base
      */
     public function sendMessage ( $to )
     {
+    }
+
+    /**
+     * 获取 服务器发过来的xml
+     *
+     * @return array
+     * @throws InputException
+     */
+    private function postXml ()
+    {
+        $_input = file_get_contents( 'php://input' );
+
+        if ( !$_message = Tools::xml2arr( $_input ) )
+        {
+            throw new InputException( '输入的数据格式错误' );
+        }
+
+        return $_message;
+    }
+
+    /**
+     * 解密信息
+     *
+     * @return array 解密后的数组
+     * @throws ParamException
+     */
+    private function decryptMsg ()
+    {
+        if ( strlen( self::$config['EncodingAesKey'] ) !== 43 )
+        {
+            throw new ParamException( '参数<EncodingAesKey>长度错误' );
+        }
+
+        $pc = new Prpcrypt( self::$config['EncodingAesKey'] );
+
+        $_result = $pc->decrypt( $this->message['Encrypt'] , self::$config['AppID'] );
+
+        return Tools::xml2arr( $_result );
+    }
+
+    /**
+     * 加密信息
+     *
+     * @param $text
+     *
+     * @return string
+     */
+
+    private function encryptMsg ( $text )
+    {
+        $pc = new Prpcrypt( self::$config['EncodingAesKey'] );
+
+        $encrypt_msg = $pc->encrypt( $text , self::$config['AppID'] );
+
+        $nonce = Tools::getRandomStr();
+
+        $sha1 = new SHA1();
+
+        $signature = $sha1->getSHA1( self::$config['token'] , $this->time , $nonce , $encrypt_msg );
+
+        $array = [
+            'Encrypt'      => $encrypt_msg ,
+            'MsgSignature' => $signature ,
+            'TimeStamp'    => $this->time ,
+            'Nonce'        => $nonce ,
+        ];
+
+        return Tools::arr2xml( $array );
     }
 
     /**
@@ -550,7 +550,7 @@ class Message extends Base
      *
      * @throws ParamException
      */
-    public function _text ( $data )
+    private function _text ( $data )
     {
         if ( !is_string( $data ) )
         {
@@ -570,7 +570,7 @@ class Message extends Base
      *
      * @throws ParamException
      */
-    public function _image ( $data )
+    private function _image ( $data )
     {
         if ( !is_string( $data ) )
         {
@@ -593,7 +593,7 @@ class Message extends Base
      *
      * @throws ParamException
      */
-    public function _voice ( $data )
+    private function _voice ( $data )
     {
         if ( !is_string( $data ) )
         {
@@ -614,7 +614,7 @@ class Message extends Base
      *
      * @param array|string $data
      */
-    public function _video ( $data )
+    private function _video ( $data )
     {
         $this->toBeSendMessage = [
             'CreateTime' => $this->time ,
@@ -650,7 +650,7 @@ class Message extends Base
      *
      * @param array|string $data
      */
-    public function _music ( $data )
+    private function _music ( $data )
     {
         $this->toBeSendMessage = [
             'CreateTime' => $this->time ,
@@ -696,7 +696,7 @@ class Message extends Base
      *
      * @throws ParamException
      */
-    public function _news ( $data )
+    private function _news ( $data )
     {
         $this->toBeSendMessage = [
             'CreateTime'   => $this->time ,
@@ -734,7 +734,7 @@ class Message extends Base
      *
      * @param array $data
      */
-    public function _transfer_customer_service ( $data = [] )
+    private function _transfer_customer_service ( $data = [] )
     {
         $this->toBeSendMessage = [
             'CreateTime' => $this->time ,
@@ -747,5 +747,4 @@ class Message extends Base
         }
 
     }
-
 }

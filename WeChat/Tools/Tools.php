@@ -63,7 +63,7 @@ class Tools
      */
     static public function xml2arr ( $xml )
     {
-        return json_decode( self::json_encode( simplexml_load_string( $xml , 'SimpleXMLElement' , LIBXML_NOCDATA ) ) , TRUE );
+        return $xml?json_decode( self::json_encode( simplexml_load_string( $xml , 'SimpleXMLElement' , LIBXML_NOCDATA ) ) , TRUE ):FALSE;
     }
 
     /**
@@ -137,6 +137,34 @@ class Tools
         }
 
         return $str;
+    }
+
+    static public function getIp ()
+    {
+        $ip = FALSE;
+        if ( !empty( $_SERVER["HTTP_CLIENT_IP"] ) )
+        {
+            $ip = $_SERVER["HTTP_CLIENT_IP"];
+        }
+        if ( !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) )
+        {
+            $ips = explode( ", " , $_SERVER['HTTP_X_FORWARDED_FOR'] );
+            if ( $ip )
+            {
+                array_unshift( $ips , $ip );
+                $ip = FALSE;
+            }
+            for ( $i = 0; $i < count( $ips ); $i++ )
+            {
+                if ( !eregi( "^(10│172.16│192.168)." , $ips[ $i ] ) )
+                {
+                    $ip = $ips[ $i ];
+                    break;
+                }
+            }
+        }
+
+        return ( $ip ? $ip : $_SERVER['REMOTE_ADDR'] );
     }
 
 }

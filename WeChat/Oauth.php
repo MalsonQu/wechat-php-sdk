@@ -140,21 +140,21 @@ class Oauth extends Base
      * 获取用户信息 无论哪种授权方式,都使用这个方法来获取用户信息
      *
      * @param string $access_token access_token
-     * @param string $openID       用户的open_id
+     * @param string $openId       用户的open_id
      * @param string $lang         语言
      *
      * @return bool|mixed
      * @throws WeResultException
      */
-    public function getUserInfo ( $access_token = NULL , $openID = NULL , $lang = 'zh_CN' )
+    public function getUserInfo ( $access_token = NULL , $openId = NULL , $lang = 'zh_CN' )
     {
 
         $_user = NULL;
 
-        if ( isset( $access_token ) && isset( $openID ) )
+        if ( isset( $access_token ) && isset( $openId ) )
         {
             $_access_token = $access_token;
-            $_openID       = $openID;
+            $_openID       = $openId;
             $_scope        = 'snsapi_userinfo';
         }
         else

@@ -73,29 +73,63 @@ class Token extends Base
      */
     static public function getJsApiTicket ()
     {
-        $_accessToken = Cache::get( 'jsApiTicket' );
+        $_token = Cache::get( 'jsApiTicket' );
 
-        if ( $_accessToken === FALSE || empty( $_accessToken ) )
+        if ( $_token === FALSE || empty( $_token ) )
         {
             $_data = [
-                'access_token' => Token::getAccessToken() ,
+                'access_token' => self::getAccessToken() ,
                 'type'         => 'jsapi' ,
             ];
 
-            $_accessToken = Tools::json2arr( Http::httpGet( self::$LINKS['JS_API_TICKET_GET'] , $_data ) );
+            $_token = Tools::json2arr( Http::httpGet( self::$LINKS['API_TICKET_GET'] , $_data ) );
 
-            if ( isset( $_accessToken['errcode'] ) && $_accessToken['errcode'] !== 0 )
+            if ( isset( $_token['errcode'] ) && $_token['errcode'] !== 0 )
             {
-                throw new WeResultException( $_accessToken['errcode'] );
+                throw new WeResultException( $_token['errcode'] );
             }
 
-            Cache::set( 'jsApiTicket' , $_accessToken['ticket'] , 7100 );
+            Cache::set( 'jsApiTicket' , $_token['ticket'] , 7190 );
 
-            $_accessToken = $_accessToken['ticket'];
+            $_token = $_token['ticket'];
 
         };
 
-        return $_accessToken;
+        return $_token;
+    }
+
+
+    /**
+     * 获取微信卡券的ticket
+     *
+     * @return bool|mixed
+     * @throws WeResultException
+     */
+    static public function getApiTicket()
+    {
+        $_token = Cache::get( 'apiTicket' );
+
+        if ( $_token === FALSE || empty( $_token ) )
+        {
+            $_data = [
+                'access_token' => self::getAccessToken() ,
+                'type'         => 'wx_card' ,
+            ];
+
+            $_token = Tools::json2arr( Http::httpGet( self::$LINKS['API_TICKET_GET'] , $_data ) );
+
+            if ( isset( $_token['errcode'] ) && $_token['errcode'] !== 0 )
+            {
+                throw new WeResultException( $_token['errcode'] );
+            }
+
+            Cache::set( 'apiTicket' , $_token['ticket'] , 7190 );
+
+            $_token = $_token['ticket'];
+
+        };
+
+        return $_token;
     }
 
 }
